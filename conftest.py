@@ -1,5 +1,4 @@
 import pytest
-import allure
 
 from playwright.sync_api import Page
 
@@ -8,7 +7,6 @@ from ui.data.test_data import AuthData
 from ui.data.urls import Urls
 
 
-@allure.step('Подготовка фикстуры с залогиненым юзером')
 @pytest.fixture
 def authorized_user(page: Page):
     obj = Authorization(AuthData.email, AuthData.password)
@@ -18,4 +16,5 @@ def authorized_user(page: Page):
                   f'"{obj.get_access_token()}");')
     page.evaluate(f'localStorage.setItem("refreshToken", '
                   f'"{obj.get_refresh_token()}");')
-    return page
+    yield page
+    pass
