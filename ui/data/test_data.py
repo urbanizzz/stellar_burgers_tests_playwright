@@ -26,3 +26,9 @@ class Burger:
         {'name': 'Сыр с астероидной плесенью', 'price': 4142}
     ]
 
+class TestData:
+    burger = [
+        Burger.bun[1]['name'],
+        Burger.sauce[2]['name'],
+        Burger.filling[2]['name']
+    ]
