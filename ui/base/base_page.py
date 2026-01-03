@@ -27,3 +27,12 @@ class BasePage:
     @allure.step('Закрытие страницы')
     def close(self):
         self.page.close()
+
+    @allure.step('Перетаскивание элемента')
+    def drag_and_drop(self, drag_locator, drop_locator):
+        self.page.locator(drag_locator).drag_to(
+            self.page.locator(drop_locator))
+
+    @allure.step('Чтение текста из списка элементов')
+    def get_text_content_from_list(self, locator):
+        return [el.text_content() for el in self.page.locator(locator).all()]
