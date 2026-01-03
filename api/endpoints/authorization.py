@@ -7,8 +7,6 @@ from api.endpoints.endpoints import Endpoints
 
 
 class Authorization(Endpoints):
-    # access_token = None
-    # refresh_token = None
 
     @allure.step('Авторизация в системе')
     def __init__(self, email, password):
@@ -23,8 +21,6 @@ class Authorization(Endpoints):
 
         self.check_response_status_code_200(self.response.text)
         self.response_json = self.response.json()
-        # self.access_token = self.response_json['accessToken']
-        # self.refresh_token = self.response_json['refreshToken']
 
     @allure.step('Запрос accessToken авторизованного пользователя')
     def get_access_token(self):
@@ -38,7 +34,7 @@ class Authorization(Endpoints):
     def userdata(self):
         headers_with_access_token = {
             **Headers.common,
-            'Authorization': self.access_token
+            'Authorization': self.response_json['accessToken']
         }
         self.response = requests.get(
             url = APIUrls.userdata,
