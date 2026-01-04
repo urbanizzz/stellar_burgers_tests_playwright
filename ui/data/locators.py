@@ -7,3 +7,9 @@ class MainPageLocators:
     @staticmethod
     def ingredient_locator(name):
         return f'//p[text()="{name}"]'
+
+class LoginLocators:
+    email_field = '//input[@name="name"]'
+    password_field = '//input[@name="Пароль"]'
+    submit_btn = '//button[text()="Войти"]'
+    register_btn = '//a[@href="/register"]'
