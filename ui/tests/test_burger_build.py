@@ -18,7 +18,4 @@ def test_burger_build(authorized_user):
 
     page.build_burger(TestData.burger)
     actual_burger = page.get_basket_list()
-    print(*actual_burger, sep='\n')
-
-    assert TestData.burger == actual_burger, (f'Ожидаемый бургер: '
-        f'{TestData.burger}, а фактически: {actual_burger}')
+    page.assertions.assert_equal(actual_burger, TestData.burger)
