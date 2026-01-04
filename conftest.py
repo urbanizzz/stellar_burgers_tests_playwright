@@ -15,3 +15,9 @@ def authorized_user(page: Page):
         'accessToken': obj.get_access_token(),
         'refreshToken': obj.get_refresh_token()
     }
+
+@pytest.fixture
+def not_authorized_user(page: Page):
+    return {
+        'page': page
+    }
