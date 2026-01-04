@@ -2,6 +2,7 @@ import allure
 
 from playwright.sync_api import Page
 
+from ui.base.base_assertions import Assertions
 from ui.base.base_page import BasePage
 from ui.data.urls import Urls
 from ui.data.locators import MainPageLocators as MPL
@@ -9,6 +10,7 @@ from ui.data.locators import MainPageLocators as MPL
 class MainPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page, Urls.base)
+        self.assertions = Assertions(page, Urls.base)
 
     @allure.step('Открытие главной страницы')
     def open_main_page(self):
@@ -20,7 +22,7 @@ class MainPage(BasePage):
             self.drag_and_drop(
                 MPL.ingredient_locator(ingredient), MPL.drop_area)
 
-    @allure.step('Список ингредиентов бургера')
+    @allure.step('Получение списка ингредиентов бургера')
     def get_basket_list(self):
         ls = self.get_text_content_from_list(MPL.basket_list_element)
 
