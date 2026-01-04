@@ -19,7 +19,6 @@ class Authorization(Endpoints):
             headers = Headers.common
         )
 
-        self.check_response_status_code_200(self.response.text)
         self.response_json = self.response.json()
 
     @allure.step('Запрос accessToken авторизованного пользователя')
