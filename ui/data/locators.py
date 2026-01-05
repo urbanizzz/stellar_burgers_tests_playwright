@@ -14,3 +14,8 @@ class LoginLocators:
     password_field = '//input[@name="Пароль"]'
     submit_btn = '//button[text()="Войти"]'
     register_btn = '//a[@href="/register"]'
+
+class AccountLocators:
+    name_field = '//input[@name="Name"]'
+    email_field = '//input[@type="text" and @name="name"]'
+    exit_btn = '//button[text()="Выход"]'
