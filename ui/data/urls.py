@@ -1,3 +1,3 @@
 class Urls:
-    base = 'https://stellarburgers.education-services.ru'
-    login = f'{base}/login'
+    base = 'https://stellarburgers.education-services.ru/'
+    login = f'{base}login'
