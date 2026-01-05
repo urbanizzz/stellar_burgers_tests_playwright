@@ -36,3 +36,11 @@ class BasePage:
     @allure.step('Чтение текста из списка элементов')
     def get_text_content_from_list(self, locator):
         return [el.text_content() for el in self.page.locator(locator).all()]
+
+    @allure.step('Чтение url страницы')
+    def get_page_url(self):
+        return self.page.url
+
+    @allure.step('Чтение атрибута тега')
+    def get_attribute(self, locator, attribute):
+        return self.page.locator(locator).get_attribute(attribute)
