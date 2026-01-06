@@ -1,7 +1,30 @@
+from string import ascii_letters,ascii_lowercase, digits, punctuation
+from random import choices
+
+
 class AuthData:
     name = 'murban'
     email = 'murban@mail.com'
     password = 'qweasdzxc'
+
+class RegistrationData:
+    def __init__(
+        self,
+        name_length = 10,
+        email_suffix = '@mail.com',
+        password_length = 15,
+    ):
+        punct = punctuation.replace('\\','').replace('"','').replace("'",'')
+        self.name = ''.join(choices(ascii_lowercase, k=1) + choices(
+            ascii_lowercase + digits, k=name_length))
+        self.email = self.name + email_suffix
+        self.password = ''.join(choices(
+            ascii_letters + digits + punct, k=password_length))
+
+    def print_data(self):
+        print(f'Name: {self.name}')
+        print(f'Email: {self.email}')
+        print(f'Password: {self.password}')
 
 class Burger:
     bun = [
