@@ -2,22 +2,38 @@ import pytest
 
 from playwright.sync_api import Page
 
-from api.endpoints.authorization import Authorization
-from ui.data.test_data import AuthData
-
-
-@pytest.fixture
-def authorized_user(page: Page):
-    obj = Authorization(AuthData.email, AuthData.password)
-    obj.check_response_status_code_200('Не прошла авторизация по API')
-    return {
-        'page': page,
-        'accessToken': obj.get_access_token(),
-        'refreshToken': obj.get_refresh_token()
-    }
+from api.endpoints.user_api import UserAPI
+from ui.data.test_data import RegistrationData
 
 @pytest.fixture
 def not_authorized_user(page: Page):
     return {
         'page': page
     }
+
+@pytest.fixture
+def for_registration(not_authorized_user):
+    page = not_authorized_user['page']
+    reg_data = RegistrationData()
+
+    yield {
+        'page': page,
+        'reg_data': reg_data
+    }
+
+    # TODO: переделать фикстуры
+
+@pytest.fixture
+def authorized_user(page: Page):
+    reg_data = RegistrationData()
+    user = UserAPI()
+    user.registration(reg_data.name, reg_data.email, reg_data.password)
+    user.authorization(reg_data.email, reg_data.password)
+    yield {
+        'page': page,
+        'accessToken': user.get_access_token(),
+        'refreshToken': user.get_refresh_token()
+    }
+    user.user_delete()
+
+
