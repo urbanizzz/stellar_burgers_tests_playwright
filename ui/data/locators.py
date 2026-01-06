@@ -13,9 +13,15 @@ class LoginLocators:
     email_field = '//input[@name="name"]'
     password_field = '//input[@name="Пароль"]'
     submit_btn = '//button[text()="Войти"]'
-    register_btn = '//a[@href="/register"]'
+    registration_btn = '//a[@href="/register"]'
 
 class AccountLocators:
     name_field = '//input[@name="Name"]'
     email_field = '//input[@type="text" and @name="name"]'
     exit_btn = '//button[text()="Выход"]'
+
+class RegistrationLocators:
+    name_field = '//label[text()="Имя"]/following-sibling::input'
+    email_field = '//label[text()="Email"]/following-sibling::input'
+    password_field = '//label[text()="Пароль"]/following-sibling::input'
+    submit_btn = '//button[text()="Зарегистрироваться"]'
