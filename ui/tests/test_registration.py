@@ -1,5 +1,3 @@
-import time
-
 import pytest
 import allure
 
@@ -29,5 +27,3 @@ def test_registration(for_registration):
     page.fill_password_field(password)
     page.submit_btn_click()
     page.check_login(name, email)
-
-    time.sleep(3)
