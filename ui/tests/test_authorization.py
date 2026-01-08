@@ -2,17 +2,19 @@ import pytest
 import allure
 
 from ui.pages.login_page import LoginPage
-from ui.data.test_data import AuthData
 
 
 @allure.title('Проверка авторизации')
 @allure.description('Успешная авторизация')
 @pytest.mark.authorization
-def test_login(not_authorized_user):
-    page = LoginPage(not_authorized_user['page'])
+def test_login(for_authorization):
+    page = LoginPage(for_authorization['page'])
+    name = for_authorization['name']
+    email = for_authorization['email']
+    password = for_authorization['password']
     page.open_main_page()
     page.click_account_button_on_main_page()
-    page.fill_email_field(AuthData.email)
-    page.fill_password_field(AuthData.password)
+    page.fill_email_field(email)
+    page.fill_password_field(password)
     page.submit_btn_click()
-    page.check_login(AuthData.name, AuthData.email)
+    page.check_login(name, email)

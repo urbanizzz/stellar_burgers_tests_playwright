@@ -13,27 +13,71 @@ def not_authorized_user(page: Page):
 
 @pytest.fixture
 def for_registration(not_authorized_user):
+    """
+    Фикстура для регистрации юзера
+    Передает данные для регистрации нового юзера
+    В конце удаляет этого юзера если он существует
+    """
     page = not_authorized_user['page']
     reg_data = RegistrationData()
-
     yield {
         'page': page,
-        'reg_data': reg_data
+        'name': reg_data.name,
+        'email': reg_data.email,
+        'password': reg_data.password
     }
-
-    # TODO: переделать фикстуры
+    user = UserAPI()
+    if user.is_user_exists(reg_data.name, reg_data.email, reg_data.password):
+        user.authorization(reg_data.email, reg_data.password)
+        user.user_delete()
 
 @pytest.fixture
-def authorized_user(page: Page):
-    reg_data = RegistrationData()
+def for_authorization(for_registration):
+    """
+    Фикстура для авторизации юзера
+    Регистрирует нового юзера и передает его данные для последующей
+    авторизации.
+    """
     user = UserAPI()
-    user.registration(reg_data.name, reg_data.email, reg_data.password)
-    user.authorization(reg_data.email, reg_data.password)
-    yield {
-        'page': page,
+    user.registration(
+        for_registration['name'],
+        for_registration['email'],
+        for_registration['password'])
+    return {
+        'page': for_registration['page'],
+        'name': for_registration['name'],
+        'email': for_registration['email'],
+        'password': for_registration['password']
+    }
+
+@pytest.fixture
+def authorized_user(for_authorization):
+    """
+    Фикстура с авторизованным юзером
+    Авторизует юзера и передает его данные, а также токены
+    """
+    user = UserAPI()
+    user.authorization(for_authorization['email'],
+                       for_authorization['password'])
+    return {
+        'page': for_authorization['page'],
+        'name': for_authorization['name'],
+        'email': for_authorization['email'],
+        'password': for_authorization['password'],
         'accessToken': user.get_access_token(),
         'refreshToken': user.get_refresh_token()
     }
-    user.user_delete()
 
-
+@pytest.fixture
+def deferred_authorization(for_authorization):
+    """
+    Фикстура для отложенной авторизации
+    Передает регистрационные данные юзера, которые потом можно использовать
+    для авторизации
+    """
+    return {
+        'page': for_authorization['page'],
+        'name': for_authorization['name'],
+        'email': for_authorization['email'],
+        'password': for_authorization['password'],
+    }

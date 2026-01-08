@@ -2,11 +2,6 @@ from string import ascii_letters,ascii_lowercase, digits, punctuation
 from random import choices
 
 
-class AuthData:
-    name = 'murban'
-    email = 'murban@mail.com'
-    password = 'qweasdzxc'
-
 class RegistrationData:
     def __init__(
         self,
