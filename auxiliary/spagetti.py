@@ -44,8 +44,6 @@ def ttest_locators(page: Page):
 email = 'murban@mail.com'
 password = 'qweasdzxc'
 name = 'urban'
-access_token_name = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MjQ4NDc0OTg0MjcwMDAxYmUwOTkzYyIsImlhdCI6MTc2NzcwMzg1NiwiZXhwIjoxNzY3NzA1MDU2fQ.Ym4djwSlPG5ZGWcRGP_XvBcVyxUOLHWs5ChoNvB7Af4'
-refresh_token_name = '6dcacb2418986f09e35ad53961a501be5c088017d00e0e3c4dbaf3c7246b6dcc4e26f9cb927374d9'
 name1 = 'qwe123asd456zxc789'
 email1 = f'{name1}@mail.com'
 
