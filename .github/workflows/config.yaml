@@ -63,7 +63,7 @@ jobs:
           MARKER: ${{ github.event.inputs.MARKER }}
           THREADS: ${{ github.event.inputs.THREADS }}
         run: |
-          docker build -t ui-tests:latest - f Dockerfile .
+          docker build -t ui-tests:latest -f Dockerfile .
           docker run --rm \
             -e BROWSER=$BROWSER \
             -e MARKER=$MARKER \
