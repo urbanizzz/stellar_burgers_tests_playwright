@@ -26,8 +26,6 @@ on:
         options:
           - smoke
           - regress
-          - uat
-          - api
       THREADS:
         description: 'параллельные потоки'
         required: true
