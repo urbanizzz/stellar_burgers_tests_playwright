@@ -7,6 +7,7 @@ from ui.pages.login_page import LoginPage
 
 @allure.title('Проверка регистрации нового пользователя')
 @allure.description('Успешная регистрация')
+@pytest.mark.smoke
 @pytest.mark.registration
 def test_registration(for_registration):
     name = for_registration['name']

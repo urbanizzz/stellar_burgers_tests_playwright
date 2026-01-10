@@ -7,6 +7,7 @@ from ui.pages.main_page import MainPage
 
 @allure.title('Создание бургера')
 @allure.description('Успешное создание бургера')
+@pytest.mark.smoke
 @pytest.mark.burger_build
 def test_burger_build(authorized_user):
     page = MainPage(authorized_user['page'])
@@ -20,6 +21,7 @@ def test_burger_build(authorized_user):
 
 @allure.title('Авторизация после создания бургера')
 @allure.description("Бургер не должен измениться после авторизации")
+@pytest.mark.smoke
 @pytest.mark.burger_build_and_login
 def test_burger_build_and_login(deferred_authorization):
     page = MainPage(deferred_authorization['page'])

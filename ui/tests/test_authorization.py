@@ -6,6 +6,7 @@ from ui.pages.login_page import LoginPage
 
 @allure.title('Проверка авторизации')
 @allure.description('Успешная авторизация')
+@pytest.mark.smoke
 @pytest.mark.authorization
 def test_login(for_authorization):
     page = LoginPage(for_authorization['page'])
