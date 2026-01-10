@@ -43,47 +43,47 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.ENV }}
 
-  steps:
-    - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-    # подготовка Allure environment
-    - name: Prepare Allure environment
-      run: |
-        mkdir -p allure-results
-        echo "Branch=${{ github.ref_name }}" > allure-results/environment.properties
-        echo "Commit=${{ github.sha }}" >> allure-results/environment.properties
-        echo "Browser=${{ github.event.inputs.BROWSER }}" >> allure-results/environment.properties
-        echo "Stage=${{ github.event.inputs.STAGE }}" >> allure-results/environment.properties
+      # подготовка Allure environment
+      - name: Prepare Allure environment
+        run: |
+          mkdir -p allure-results
+          echo "Branch=${{ github.ref_name }}" > allure-results/environment.properties
+          echo "Commit=${{ github.sha }}" >> allure-results/environment.properties
+          echo "Browser=${{ github.event.inputs.BROWSER }}" >> allure-results/environment.properties
+          echo "Stage=${{ github.event.inputs.STAGE }}" >> allure-results/environment.properties
 
-    # Сборка и запуск тестов через Docker
-    - name: Build and run tests
-      env:
-        BROWSER: ${{ github.event.inputs.BROWSER }}
-        MARKER: ${{ github.event.inputs.MARKER }}
-        THREADS: ${{ github.event.inputs.THREADS }}
-      run: |
-        docker build -t ui-tests:latest - f Dockerfile .
-        docker run --rm \
-          -e BROWSER=$BROWSER \
-          -e MARKER=$MARKER \
-          -e THREADS=$THREADS \
-          -v $(pwd)/allure-results:/usr/workspace/allure-results \
-          ui-tests:latest
+      # Сборка и запуск тестов через Docker
+      - name: Build and run tests
+        env:
+          BROWSER: ${{ github.event.inputs.BROWSER }}
+          MARKER: ${{ github.event.inputs.MARKER }}
+          THREADS: ${{ github.event.inputs.THREADS }}
+        run: |
+          docker build -t ui-tests:latest - f Dockerfile .
+          docker run --rm \
+            -e BROWSER=$BROWSER \
+            -e MARKER=$MARKER \
+            -e THREADS=$THREADS \
+            -v $(pwd)/allure-results:/usr/workspace/allure-results \
+            ui-tests:latest
 
-    # Генерация Allure отчета
-    - name: Generate Allure report
-      if: always()
-      run: |
-        docker run --rm \
-          -v $(pwd):/workspace \
-          mcr.microsoft.com/playwright/python:v1.47.0-noble \
-          sh -c "pip install allure-pytest && cd /workspace && allure generate allure-results -c -o allure-report"
+      # Генерация Allure отчета
+      - name: Generate Allure report
+        if: always()
+        run: |
+          docker run --rm \
+            -v $(pwd):/workspace \
+            mcr.microsoft.com/playwright/python:v1.47.0-noble \
+            sh -c "pip install allure-pytest && cd /workspace && allure generate allure-results -c -o allure-report"
 
-    # Деплой на GitHub Pages
-    - name: Deploy to GitHub Pages
-      if: success()
-      uses: JamesIves/github-pages-deploy-action@v2
-      with:
-        token: ${{ secrets.CI_TOKEN }}
-        branch: gh-pages
-        folder: allure-report
+      # Деплой на GitHub Pages
+      - name: Deploy to GitHub Pages
+        if: success()
+        uses: JamesIves/github-pages-deploy-action@v2
+        with:
+          token: ${{ secrets.CI_TOKEN }}
+          branch: gh-pages
+          folder: allure-report
